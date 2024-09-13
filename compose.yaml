@@ -5,5 +5,7 @@ services:
       - 'POSTGRES_DB=HPlayerDB'
       - 'POSTGRES_PASSWORD=password'
       - 'POSTGRES_USER=himagi'
+    user: root
     ports:
       - '5432:5432'
+    
