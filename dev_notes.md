@@ -8,3 +8,5 @@
 1. `docker exec -it containerID bash`
 2. `psql -U himagi -d HPlayerDB`
 
+### OAuth2
+- https://youtu.be/us0VjFiHogo?t=306
