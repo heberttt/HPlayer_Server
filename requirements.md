@@ -18,3 +18,10 @@
 | duration | int|
 |music_file| longblob|
 
+
+### 3. Download_requests
+|Variable | Data Type |
+|:------|:-------:|
+|link_code|varchar|
+| userId (id) |int|
+| isDownloaded| boolean|

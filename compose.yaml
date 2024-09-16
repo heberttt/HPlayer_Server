@@ -2,9 +2,9 @@ services:
   postgres:
     image: 'postgres:latest'
     environment:
-      - 'POSTGRES_DB=HPlayerDB'
-      - 'POSTGRES_PASSWORD=password'
-      - 'POSTGRES_USER=himagi'
+      - POSTGRES_DB=HPlayerDB
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=himagi
     user: root
     ports:
       - '5432:5432'
