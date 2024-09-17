@@ -2,26 +2,43 @@
 
 ## DB tables
 
-### 1. Users
-| Variable | Data Type |
-|:------|:-------:|
+### 1. users
+| Variable | Data Type |Note|
+|:------|:-------:|:-----|
 | id (PK)| int |
 |username| varchar|
+|role|varchar|user, admin
 |password (hashed)|varchar|
 |email|varchar|
 
-### 2. Musics
-|Variable | Data Type |
-|:------|:-------:|
+### 2. musics
+|Variable | Data Type | Note|
+|:------|:-------:|:-----|
 | link_code (PK)| varchar|
 | title | varchar|
-| duration | int|
+| duration | int|seconds|
 |music_file| longblob|
 
 
-### 3. Download_requests
-|Variable | Data Type |
-|:------|:-------:|
-|link_code|varchar|
-| userId (id) |int|
-| isDownloaded| boolean|
+### 3. download_requests
+|Variable | Data Type | Note|
+|:------|:-------:|:-----|
+|link_code|varchar||
+| user_id (id) |int||
+| status| varchar|successful, ongoing, unsuccessful|
+
+### 4. playlists
+|Variable | Data Type | Note|
+|:------|:-------:|:-----|
+|playlist_id|int|PK|
+|playlist_name|varchar
+|user_id|int|FK|
+|created_at| timestamp
+
+
+### 5. playlist_song
+|Variable | Data Type | Note|
+|:------|:-------:|:-----|
+|playlist_id|int|FK
+|song_id|int|FK
+
