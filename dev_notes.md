@@ -10,3 +10,7 @@
 
 ### OAuth2
 - https://youtu.be/us0VjFiHogo?t=306
+
+
+### Tip
+- Use a queue to process download request
