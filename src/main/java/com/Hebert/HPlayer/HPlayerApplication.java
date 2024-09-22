@@ -15,9 +15,4 @@ public class HPlayerApplication {
 	}
 
 
-
-	@EventListener(ApplicationReadyEvent.class)
-	public void doSomethingAfterStartup(HUserRepositoryImpl hUserRepositoryImpl) {
-		
-	}
 }

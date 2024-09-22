@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Hebert.HPlayer.login.HUserDO;
@@ -34,7 +35,7 @@ public class HController {
     }
 
     @GetMapping("/user/email")
-    public HUserDO getUserByEmail(@RequestBody String email){
+    public HUserDO getUserByEmail(@RequestParam String email){
         Optional<HUserDO> result = hUserRepository.findByEmail(email);
         if (result == null){
             throw new RuntimeException("no user found");

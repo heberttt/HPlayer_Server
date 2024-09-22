@@ -23,12 +23,12 @@ public class HUserDO {
     private String email;
     @Getter
     @Setter
-    private HUserRoleEnum role;
+    private String role;
 
 
 
 
-    public HUserDO(int id, String username, String password, String email, HUserRoleEnum role){
+    public HUserDO(int id, String username, String password, String email, String role){
         setId(id);
         setUsername(username);
         setPassword(password);

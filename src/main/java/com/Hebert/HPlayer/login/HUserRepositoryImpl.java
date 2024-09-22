@@ -1,5 +1,6 @@
 package com.Hebert.HPlayer.login;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
@@ -24,13 +25,15 @@ public class HUserRepositoryImpl implements HUserRepository{
                 .optional();
     }
 
+
+
     @Override
     public void createUser(HUserDO userDO) {
-        var updated = jdbcClient.sql("INSERT INTO Run(id,title,started_on,completed_on,miles,location) values(?,?,?,?,?,?)")
-                .params(List.of(run.id(),run.title(),run.startedOn(),run.completedOn(),run.miles(),run.location().toString()))
+        var updated = jdbcClient.sql("INSERT INTO users(username, role, password, email) values(?,?,?,?,?,?)")
+                .params(List.of(userDO.getUsername() , userDO.getRole(), userDO.getPassword(), userDO.getEmail()))
                 .update();
 
-                Assert.state(updated == 1, "Failed to create run " + run.title());
+                Assert.state(updated == 1, "Failed to create user " + userDO.getUsername());
     }
     
 }
