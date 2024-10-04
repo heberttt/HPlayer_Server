@@ -20,5 +20,6 @@ public class HMusicTest {
         assertEquals("1f81qXxggo8", YoutubeCodeCleaner.linkCodeGetter("https://www.youtube.com/watch?v=1f81qXxggo8"));
         assertEquals("1f81qXxggo8",YoutubeCodeCleaner.linkCodeGetter("https://youtu.be/1f81qXxggo8?feature=shared"));
         assertEquals("u5heWZ9occg", YoutubeCodeCleaner.linkCodeGetter("https://www.youtube.com/watch?v=u5heWZ9occg&list=PLbLnVwFkWyIi-4rcBuuMPT5tVZuI3ba0z"));
+        assertEquals("abcdef", YoutubeCodeCleaner.linkCodeGetter("www.youtube.com/watch?v=abcdef"));
     }
 }

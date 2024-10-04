@@ -3,6 +3,8 @@ package com.Hebert.HPlayer.HMusic.implementation;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.Hebert.HPlayer.HMusic.Exceptions.YoutubeLinkException;
+
 public class YoutubeCodeCleaner {
     public static String linkCodeGetter(String link) {
         //https://www.youtube.com/watch?v=1f81qXxggo8
@@ -14,12 +16,18 @@ public class YoutubeCodeCleaner {
         
         String dirtyCode;
 
-    
+        String domainName;
 
         if (link.contains("https://")){
             dirtyCode = splittedLink[3];
+            domainName = splittedLink[2];
         }else{
             dirtyCode = splittedLink[1];
+            domainName = splittedLink[0];
+        }
+
+        if (!domainName.contains("youtube.com") && !domainName.contains("youtu.be")){
+            throw new YoutubeLinkException("Link is not a youtube link");
         }
 
 
