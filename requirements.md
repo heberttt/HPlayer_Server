@@ -15,8 +15,8 @@
 |Variable | Data Type | Note|
 |:------|:-------:|:-----|
 | link_code (PK)| varchar|
-| title | varchar|
-| duration | int|seconds|
+| title | varchar|null
+| duration | int|seconds|null
 |music_file| longblob|
 
 
