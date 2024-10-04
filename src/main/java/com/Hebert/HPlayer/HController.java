@@ -2,6 +2,7 @@ package com.Hebert.HPlayer;
 
 import java.util.Optional;
 
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,8 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Hebert.HPlayer.HMusic.implementation.YoutubeDataApiConsumer;
 import com.Hebert.HPlayer.login.HUserDO;
 import com.Hebert.HPlayer.login.HUserRepositoryImpl;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
+
+
+//delete this later
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.List;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/test")
@@ -23,8 +34,8 @@ public class HController {
     }
     
     @GetMapping
-    public String getHello(){
-        return "hi";
+    public List<String> getHello() throws GoogleJsonResponseException, GeneralSecurityException, IOException{
+        return Arrays.asList(YoutubeDataApiConsumer.getTitleAndDuration("8jSBSS_Nk9A"));
     }
 
     @PostMapping

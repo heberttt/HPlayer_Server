@@ -9,6 +9,15 @@ public class MusicDO {
     private Integer duration;
     private byte[] musicFile; //change to file;
 
+    public MusicDO(){};
+
+    public MusicDO(String link_code, String title, Integer duration, byte[] musicFile){
+        this.link_code = link_code;
+        this.title = title;
+        this.duration = duration;
+        this.musicFile = musicFile;
+    }
+
     public String getLink_code() {
         return link_code;
     }
