@@ -1,8 +1,11 @@
 package com.Hebert.HPlayer;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.exception.GenericJDBCException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,21 +18,13 @@ import com.Hebert.HPlayer.login.HUserDO;
 import com.Hebert.HPlayer.login.HUserRepositoryImpl;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 
-
-//delete this later
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.List;
-import java.util.Arrays;
-
 @RestController
 @RequestMapping("/test")
 public class HController {
 
     private final HUserRepositoryImpl hUserRepository;
 
-    HController(HUserRepositoryImpl hUserRepository){
+    public HController(HUserRepositoryImpl hUserRepository){
         this.hUserRepository = hUserRepository;
     }
     
