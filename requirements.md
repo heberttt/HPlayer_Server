@@ -17,7 +17,7 @@
 | link_code (PK)| varchar|
 | title | varchar|null
 | duration | int|seconds|null
-|music_file| longblob|
+|music_file| BYTEA|
 
 
 ### 3. download_requests

@@ -17,7 +17,7 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
     private MusicRepository musicRepository;
 
     @Override
-    public void downloadMusic(String link) throws IOException, InterruptedException{
+    public Boolean downloadMusic(String link) throws IOException, InterruptedException{
         List<String> command = List.of("yt-dlp", "-x", "--audio-format", "mp3", "-o", link, link);
         
         ProcessBuilder processBuilder = new ProcessBuilder(command);
@@ -40,9 +40,18 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
 
             String musicTitle = musicData[0];
 
-            String musicDuration = musicData[1];
+            Integer musicDuration = Integer.parseInt(musicData[1]);
 
-            //musicRepository.addMusic();
+            musicDO.setTitle(musicTitle);
+            musicDO.setDuration(musicDuration);
+            musicDO.setLink_code(link);
+            musicDO.setMusicFile(YoutubeUtil.convertFileToByteArray(downloadedFile));
+
+
+            musicRepository.addMusic(musicDO);
+
+
+            return true;
         }
 
 

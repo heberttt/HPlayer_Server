@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public interface MusicDownloaderService {
     
-    public void downloadMusic(String link) throws IOException, InterruptedException;
+    public Boolean downloadMusic(String link) throws IOException, InterruptedException;
 
 }
 
