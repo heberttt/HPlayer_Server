@@ -33,6 +33,18 @@ public class HController {
         return Arrays.asList(YoutubeDataApiConsumer.getTitleAndDuration("8jSBSS_Nk9A"));
     }
 
+    @GetMapping("/currentDirectory")
+    public String getCurrentWorkingDirectory() {
+        String currentDirectory = System.getProperty("user.dir");
+        return "Current working directory: " + currentDirectory;
+    }
+
+    @GetMapping("/apiKey")
+    public String getKey() {
+        return System.getenv("YOUTUBE_API_KEY");
+    }
+    
+
     @PostMapping
     public String postHello(
         @RequestBody String request

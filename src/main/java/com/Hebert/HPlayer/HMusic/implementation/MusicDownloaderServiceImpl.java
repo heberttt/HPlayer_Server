@@ -26,13 +26,16 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
 
         processBuilder.redirectErrorStream(true);
         processBuilder.inheritIO();
-        processBuilder.directory(new File("/home/himagi/Documents/development/HPlayer/tempMusics/"));
+
+        String currentDirectory = System.getProperty("user.dir");
+
+        processBuilder.directory(new File(currentDirectory + "/tempMusics/"));
 
         Process process = processBuilder.start();
 
         process.waitFor();
 
-        File downloadedFile = new File("/home/himagi/Documents/development/HPlayer/tempMusics/" + cleanLink + ".mp3");
+        File downloadedFile = new File(currentDirectory + "/tempMusics/" + cleanLink + ".mp3");
 
         if(!downloadedFile.exists()){
             throw new IOException("Music file not found.");
@@ -45,16 +48,22 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
 
             Integer musicDuration = YoutubeUtil.convertDurationIntoSeconds(musicData[1]);
 
+            String musicLowThumbnailUrl = musicData[2];
+
+            String musicHighThumbnailUrl = musicData[3];
+
             musicDO.setTitle(musicTitle);
             musicDO.setDuration(musicDuration);
-            musicDO.setLink_code(link);
+            musicDO.setLink_code(cleanLink);
+            musicDO.setLowThumbnailUrl(musicLowThumbnailUrl);
+            musicDO.setHighThumbnailUrl(musicHighThumbnailUrl);
             musicDO.setMusicFile(YoutubeUtil.convertFileToByteArray(downloadedFile));
 
             try{
                 musicRepository.addMusic(musicDO);
 
 
-                List<String> cleanCommand = List.of("rm", "/home/himagi/Documents/development/HPlayer/tempMusics/" + cleanLink + ".mp3");
+                List<String> cleanCommand = List.of("rm", currentDirectory + "/tempMusics/" + cleanLink + ".mp3");
         
                 ProcessBuilder cleanProcessBuilder = new ProcessBuilder(cleanCommand);
 

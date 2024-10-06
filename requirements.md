@@ -17,6 +17,8 @@
 | link_code (PK)| varchar|
 | title | varchar|null
 | duration | int|seconds|null
+| low_thumbnail_url | varchar|
+| high_thumbnail_url| varchar|
 |music_file| BYTEA|
 
 
