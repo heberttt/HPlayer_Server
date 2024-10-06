@@ -27,11 +27,7 @@ public class HMusicController {
     @PostMapping("/downloadMusic")
     public ResponseEntity<DownloadMusicResult> downloadMusic(@RequestBody DownloadMusicRequest request) throws IOException, InterruptedException {
         
-        Boolean success = musicDownloaderService.downloadMusic(request.getYoutubeLink());
-        
-        DownloadMusicResult result = new DownloadMusicResult();
-
-        result.setSuccess(success);
+        DownloadMusicResult result = musicDownloaderService.downloadMusic(request.getYoutubeLink());
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

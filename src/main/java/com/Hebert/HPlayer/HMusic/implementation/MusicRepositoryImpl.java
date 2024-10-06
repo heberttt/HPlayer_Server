@@ -1,6 +1,7 @@
 package com.Hebert.HPlayer.HMusic.implementation;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -50,9 +51,19 @@ public class MusicRepositoryImpl implements MusicRepository{
     }
 
     @Override
-    public MusicDO findMusicByCode(String code) {
+    public MusicDO queryMusic(String code) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findMusicByCode'");
+        throw new UnsupportedOperationException("Unimplemented method 'queryMusic'");
     }
+
+    @Override
+    public Optional<MusicDO> queryMusicDetails(String code) {
+        return jdbcClient.sql("SELECT link_code, title, duration, low_thumbnail_url, high_thumbnail_url FROM musics WHERE link_code = :link_code")
+                        .param("link_code", code)
+                        .query(MusicDO.class)
+                        .optional();
+    }
+
+    
     
 }

@@ -3,6 +3,7 @@ package com.Hebert.HPlayer.HMusic.implementation;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.Hebert.HPlayer.HMusic.MusicDO;
 import com.Hebert.HPlayer.HMusic.MusicDownloaderService;
 import com.Hebert.HPlayer.HMusic.MusicRepository;
+import com.Hebert.HPlayer.HMusic.results.DownloadMusicResult;
 
 @Service
 public class MusicDownloaderServiceImpl implements MusicDownloaderService{
@@ -18,7 +20,7 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
     private MusicRepository musicRepository;
 
     @Override
-    public Boolean downloadMusic(String link) throws IOException, InterruptedException{
+    public DownloadMusicResult downloadMusic(String link) throws IOException, InterruptedException{
         String cleanLink = YoutubeUtil.linkCodeGetter(link);
         List<String> command = List.of("yt-dlp", "-x", "--audio-format", "mp3", "-o", cleanLink, link);
         
@@ -59,30 +61,40 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
             musicDO.setHighThumbnailUrl(musicHighThumbnailUrl);
             musicDO.setMusicFile(YoutubeUtil.convertFileToByteArray(downloadedFile));
 
+            DownloadMusicResult result = new DownloadMusicResult();
+
+            Boolean success = false;
+
+
             try{
                 musicRepository.addMusic(musicDO);
 
 
                 List<String> cleanCommand = List.of("rm", currentDirectory + "/tempMusics/" + cleanLink + ".mp3");
-        
+            
                 ProcessBuilder cleanProcessBuilder = new ProcessBuilder(cleanCommand);
 
                 cleanProcessBuilder.redirectErrorStream(true);
                 cleanProcessBuilder.inheritIO();
 
                 Process cleanProcess = cleanProcessBuilder.start();
-                
+                    
                 cleanProcess.waitFor();
 
+                MusicDO musicDetails = musicRepository.queryMusicDetails(cleanLink).get();
 
+                success = true;
+
+                result.setSuccess(success);
+                result.setResult(musicDetails);
+                
             }catch(Exception e){
-                System.out.println(e.toString());
-                return false;
+                System.out.println(e);
             }
+
+
+            return result;
             
-
-
-            return true;
         }
 
 

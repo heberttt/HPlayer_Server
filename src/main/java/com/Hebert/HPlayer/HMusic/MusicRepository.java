@@ -1,6 +1,7 @@
 package com.Hebert.HPlayer.HMusic;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MusicRepository {
     
@@ -10,5 +11,7 @@ public interface MusicRepository {
 
     public List<MusicDO> findAllMusic();
 
-    public MusicDO findMusicByCode(String code);
+    public MusicDO queryMusic(String code);
+
+    public Optional<MusicDO> queryMusicDetails(String code);
 }
