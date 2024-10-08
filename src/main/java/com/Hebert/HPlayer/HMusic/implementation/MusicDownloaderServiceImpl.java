@@ -2,15 +2,19 @@ package com.Hebert.HPlayer.HMusic.implementation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Queue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Hebert.HPlayer.HMusic.MusicDO;
+import com.Hebert.HPlayer.HMusic.MusicDownloadQueue;
 import com.Hebert.HPlayer.HMusic.MusicDownloaderService;
 import com.Hebert.HPlayer.HMusic.MusicRepository;
+import com.Hebert.HPlayer.HMusic.requests.DownloadMusicRequest;
 import com.Hebert.HPlayer.HMusic.results.DownloadMusicResult;
 
 @Service
@@ -18,9 +22,37 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
 
     @Autowired
     private MusicRepository musicRepository;
+    
+    Queue<DownloadMusicRequest> musicDownloadQueue = new LinkedList<>();
+    
+    @Override
+    public DownloadMusicResult downloadMusicProcess(DownloadMusicRequest request) throws IOException, InterruptedException {
+
+        if (musicDownloadQueue.isEmpty()){
+            musicDownloadQueue.add(request);
+            downloadMusic();  // need thread?
+        }else{
+            musicDownloadQueue.add(request);
+        }
+        
+        
+
+        DownloadMusicResult result = new DownloadMusicResult();
+
+        result.setSuccess(true);
+
+        return result;
+
+    }
+
 
     @Override
-    public DownloadMusicResult downloadMusic(String link) throws IOException, InterruptedException{
+    public DownloadMusicResult downloadMusic() throws IOException, InterruptedException{
+
+        DownloadMusicRequest request = musicDownloadQueue.peek();
+
+        String link = request.getYoutubeLink();
+
         String cleanLink = YoutubeUtil.linkCodeGetter(link);
         List<String> command = List.of("yt-dlp", "-x", "--audio-format", "mp3", "-o", cleanLink, link);
         
@@ -63,7 +95,7 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
 
             DownloadMusicResult result = new DownloadMusicResult();
 
-            Boolean success = false;
+            // Boolean success = false;
 
 
             try{
@@ -81,12 +113,12 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
                     
                 cleanProcess.waitFor();
 
-                MusicDO musicDetails = musicRepository.queryMusicDetails(cleanLink).get();
+                // MusicDO musicDetails = musicRepository.queryMusicDetails(cleanLink).get();
 
-                success = true;
+                // success = true;
 
-                result.setSuccess(success);
-                result.setResult(musicDetails);
+                // result.setSuccess(success);
+                // result.setResult(musicDetails);
                 
             }catch(Exception e){
                 System.out.println(e);
@@ -99,6 +131,8 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
 
 
     }
+
+
 
     
 

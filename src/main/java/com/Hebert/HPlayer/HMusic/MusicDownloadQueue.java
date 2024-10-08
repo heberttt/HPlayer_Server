@@ -3,9 +3,12 @@ package com.Hebert.HPlayer.HMusic;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import org.springframework.stereotype.Component;
+
 import com.Hebert.HPlayer.HMusic.requests.DownloadMusicRequest;
 
-public class DownloadMusicProcessQueue {
+@Component
+public class MusicDownloadQueue {
     
     Queue<DownloadMusicRequest> musicDownloadRequestQueue = new LinkedList<>();
 
@@ -24,4 +27,6 @@ public class DownloadMusicProcessQueue {
     public Integer getQueueSize(){
         return musicDownloadRequestQueue.size();
     }
+
+    
 }
