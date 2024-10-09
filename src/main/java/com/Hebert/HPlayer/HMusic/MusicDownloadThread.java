@@ -1,19 +1,13 @@
 package com.Hebert.HPlayer.HMusic;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 import com.Hebert.HPlayer.HMusic.implementation.YoutubeDataApiConsumer;
 import com.Hebert.HPlayer.HMusic.implementation.YoutubeUtil;
 import com.Hebert.HPlayer.HMusic.requests.DownloadMusicRequest;
-import com.Hebert.HPlayer.HMusic.results.DownloadMusicResult;
-
-import java.io.IOException;
-import java.util.List;
-import java.io.File;
-import java.util.Queue;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.google.api.services.youtube.YouTube;
 
 
 public class MusicDownloadThread implements Runnable{
@@ -33,14 +27,18 @@ public class MusicDownloadThread implements Runnable{
 
     
 
-    public MusicDownloadThread(DownloadMusicRequest request){
+    public MusicDownloadThread(DownloadMusicRequest request, MusicDownloaderService musicDownloaderService, MusicRepository musicRepository){
         this.request = request;
+        this.musicDownloaderService = musicDownloaderService;
+        this.musicRepository = musicRepository;
+        
     }
     
-    @Autowired
-    private MusicRepository musicRepository;
+    private final MusicRepository musicRepository;
+
+    private final MusicDownloaderService musicDownloaderService;
     
-    public DownloadMusicResult downloadMusic(DownloadMusicRequest request) throws IOException, InterruptedException{
+    public void downloadMusic(DownloadMusicRequest request) throws IOException, InterruptedException{
 
         String link = request.getYoutubeLink();
 
@@ -84,13 +82,14 @@ public class MusicDownloadThread implements Runnable{
             musicDO.setHighThumbnailUrl(musicHighThumbnailUrl);
             musicDO.setMusicFile(YoutubeUtil.convertFileToByteArray(downloadedFile));
 
-            DownloadMusicResult result = new DownloadMusicResult();
-
-            // Boolean success = false;
 
 
             try{
+                System.out.println("Adding music to repository...");
+
                 musicRepository.addMusic(musicDO);
+
+                System.out.println("Music added");
 
 
                 List<String> cleanCommand = List.of("rm", currentDirectory + "/tempMusics/" + cleanLink + ".mp3");
@@ -115,8 +114,11 @@ public class MusicDownloadThread implements Runnable{
                 System.out.println(e);
             }
 
-
-            return result;
+            if (!musicDownloaderService.queueIsEmpty()){
+                musicDownloaderService.downloadMusic();
+            }
+            
             
         }
+    }
 }
