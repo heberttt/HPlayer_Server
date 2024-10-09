@@ -1,53 +1,46 @@
-package com.Hebert.HPlayer.HMusic.implementation;
+package com.Hebert.HPlayer.HMusic;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.Hebert.HPlayer.HMusic.MusicDO;
-import com.Hebert.HPlayer.HMusic.MusicDownloaderService;
-import com.Hebert.HPlayer.HMusic.MusicRepository;
+import com.Hebert.HPlayer.HMusic.implementation.YoutubeDataApiConsumer;
+import com.Hebert.HPlayer.HMusic.implementation.YoutubeUtil;
 import com.Hebert.HPlayer.HMusic.requests.DownloadMusicRequest;
 import com.Hebert.HPlayer.HMusic.results.DownloadMusicResult;
 
-@Service
-public class MusicDownloaderServiceImpl implements MusicDownloaderService{
+import java.io.IOException;
+import java.util.List;
+import java.io.File;
+import java.util.Queue;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.api.services.youtube.YouTube;
+
+
+public class MusicDownloadThread implements Runnable{
+
+    private DownloadMusicRequest request;
+
+    @Override
+    public void run() {
+        try {
+            downloadMusic(this.request);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        } catch (InterruptedException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    
+
+    public MusicDownloadThread(DownloadMusicRequest request){
+        this.request = request;
+    }
+    
     @Autowired
     private MusicRepository musicRepository;
     
-    Queue<DownloadMusicRequest> musicDownloadQueue = new LinkedList<>();
-    
-    @Override
-    public DownloadMusicResult downloadMusicProcess(DownloadMusicRequest request) throws IOException, InterruptedException {
-
-        if (musicDownloadQueue.isEmpty()){
-            musicDownloadQueue.add(request);
-            downloadMusic();  // need thread?
-        }else{
-            musicDownloadQueue.add(request);
-        }
-        
-        
-
-        DownloadMusicResult result = new DownloadMusicResult();
-
-        result.setSuccess(true);
-
-        return result;
-
-    }
-
-
-    @Override
-    public DownloadMusicResult downloadMusic() throws IOException, InterruptedException{
-
-        DownloadMusicRequest request = musicDownloadQueue.peek();
+    public DownloadMusicResult downloadMusic(DownloadMusicRequest request) throws IOException, InterruptedException{
 
         String link = request.getYoutubeLink();
 
@@ -126,14 +119,4 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
             return result;
             
         }
-
-
-    }
-
-
-
-    
-
-    
-    
 }
