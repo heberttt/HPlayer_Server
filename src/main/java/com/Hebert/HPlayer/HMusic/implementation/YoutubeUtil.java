@@ -8,6 +8,14 @@ import java.io.File;
 import java.io.FileInputStream;
 
 public class YoutubeUtil {
+
+    public static String linkStandardization(String link){
+        String linkCode = linkCodeGetter(link);
+
+        return "https://www.youtube.com/watch?v=" + linkCode;
+    }
+
+
     public static String linkCodeGetter(String link) {
         //https://www.youtube.com/watch?v=1f81qXxggo8
         //https://youtu.be/1f81qXxggo8?feature=shared

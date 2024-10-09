@@ -55,6 +55,8 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
         downloadThread.start();
 
         musicDownloadQueue.remove();
+
+        System.out.println("removing music from queue");
     }
 
     @Override

@@ -40,7 +40,7 @@ public class MusicDownloadThread implements Runnable{
     
     public void downloadMusic(DownloadMusicRequest request) throws IOException, InterruptedException{
 
-        String link = request.getYoutubeLink();
+        String link = YoutubeUtil.linkStandardization(request.getYoutubeLink());
 
         String cleanLink = YoutubeUtil.linkCodeGetter(link);
         List<String> command = List.of("yt-dlp", "-x", "--audio-format", "mp3", "-o", cleanLink, link);
