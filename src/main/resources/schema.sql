@@ -15,6 +15,5 @@ CREATE TABLE musics(
     title VARCHAR(255) NOT NULL,
     duration INT NOT NULL,
     low_thumbnail_url VARCHAR(255) NOT NULL,
-    high_thumbnail_url VARCHAR(255) NOT NULL,
-    music_file BYTEA
+    high_thumbnail_url VARCHAR(255) NOT NULL
 );

@@ -43,6 +43,13 @@ public class MusicDownloadThread implements Runnable{
         String link = YoutubeUtil.linkStandardization(request.getYoutubeLink());
 
         String cleanLink = YoutubeUtil.linkCodeGetter(link);
+
+        //check if exist
+
+        
+
+
+
         List<String> command = List.of("yt-dlp", "-x", "--audio-format", "mp3", "-o", cleanLink, link);
         
         ProcessBuilder processBuilder = new ProcessBuilder(command);
@@ -51,7 +58,7 @@ public class MusicDownloadThread implements Runnable{
         processBuilder.inheritIO();
 
         String currentDirectory = System.getProperty("user.dir");
-
+        
         processBuilder.directory(new File(currentDirectory + "/tempMusics/"));
 
         Process process = processBuilder.start();
@@ -80,7 +87,6 @@ public class MusicDownloadThread implements Runnable{
             musicDO.setLink_code(cleanLink);
             musicDO.setLowThumbnailUrl(musicLowThumbnailUrl);
             musicDO.setHighThumbnailUrl(musicHighThumbnailUrl);
-            musicDO.setMusicFile(YoutubeUtil.convertFileToByteArray(downloadedFile));
 
 
 
@@ -91,17 +97,18 @@ public class MusicDownloadThread implements Runnable{
 
                 System.out.println("Music added");
 
+                
 
-                List<String> cleanCommand = List.of("rm", currentDirectory + "/tempMusics/" + cleanLink + ".mp3");
+                // List<String> cleanCommand = List.of("rm", currentDirectory + "/tempMusics/" + cleanLink + ".mp3");
             
-                ProcessBuilder cleanProcessBuilder = new ProcessBuilder(cleanCommand);
+                // ProcessBuilder cleanProcessBuilder = new ProcessBuilder(cleanCommand);
 
-                cleanProcessBuilder.redirectErrorStream(true);
-                cleanProcessBuilder.inheritIO();
+                // cleanProcessBuilder.redirectErrorStream(true);
+                // cleanProcessBuilder.inheritIO();
 
-                Process cleanProcess = cleanProcessBuilder.start();
+                // Process cleanProcess = cleanProcessBuilder.start();
                     
-                cleanProcess.waitFor();
+                // cleanProcess.waitFor();
 
                 // MusicDO musicDetails = musicRepository.queryMusicDetails(cleanLink).get();
 

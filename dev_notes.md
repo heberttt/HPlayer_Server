@@ -13,4 +13,5 @@
 
 
 ### Tip
-- Use a queue to process download request
+- Use a queue to process download request &check;
+- for all songs for user, just select all songs related to user name from playlist table

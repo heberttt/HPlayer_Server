@@ -10,15 +10,13 @@ public class MusicDO {
     private String lowThumbnailUrl;
     private String highThumbnailUrl;
     
-    private byte[] musicFile; //change to file;
 
     public MusicDO(){};
 
-    public MusicDO(String link_code, String title, Integer duration, String lowThumbnailUrl, String highThumbnailUrl, byte[] musicFile){
+    public MusicDO(String link_code, String title, Integer duration, String lowThumbnailUrl, String highThumbnailUrl){
         this.link_code = link_code;
         this.title = title;
         this.duration = duration;
-        this.musicFile = musicFile;
         this.lowThumbnailUrl = lowThumbnailUrl;
         this.highThumbnailUrl = highThumbnailUrl;
     }
@@ -57,12 +55,7 @@ public class MusicDO {
     public void setDuration(Integer duration) {
         this.duration = duration;
     }
-    public byte[] getMusicFile() {
-        return musicFile;
-    }
-    public void setMusicFile(byte[] musicFile) {
-        this.musicFile = musicFile;
-    }
+    
 
 
 

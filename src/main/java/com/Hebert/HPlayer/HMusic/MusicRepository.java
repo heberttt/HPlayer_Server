@@ -11,7 +11,5 @@ public interface MusicRepository {
 
     public List<MusicDO> findAllMusic();
 
-    public MusicDO queryMusic(String code);
-
     public Optional<MusicDO> queryMusicDetails(String code);
 }

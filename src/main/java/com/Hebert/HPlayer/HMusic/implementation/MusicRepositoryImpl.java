@@ -23,8 +23,8 @@ public class MusicRepositoryImpl implements MusicRepository{
 
     @Override
     public void addMusic(MusicDO music) {
-        var updated = jdbcClient.sql("INSERT INTO musics(link_code, title, duration, low_thumbnail_url, high_thumbnail_url,music_file) VALUES(?,?,?,?,?,?)")
-                        .params(List.of(music.getLink_code(), music.getTitle(), music.getDuration(), music.getLowThumbnailUrl(), music.getHighThumbnailUrl(), music.getMusicFile()))
+        var updated = jdbcClient.sql("INSERT INTO musics(link_code, title, duration, low_thumbnail_url, high_thumbnail_url) VALUES(?,?,?,?,?)")
+                        .params(List.of(music.getLink_code(), music.getTitle(), music.getDuration(), music.getLowThumbnailUrl(), music.getHighThumbnailUrl()))
                         .update();
 
         Assert.state(updated == 1, "Failed to insert new music: " + music.getTitle());
@@ -48,12 +48,6 @@ public class MusicRepositoryImpl implements MusicRepository{
     public List<MusicDO> findAllMusic() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAllMusic'");
-    }
-
-    @Override
-    public MusicDO queryMusic(String code) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'queryMusic'");
     }
 
     @Override
