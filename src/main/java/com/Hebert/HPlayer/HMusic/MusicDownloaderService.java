@@ -1,7 +1,6 @@
 package com.Hebert.HPlayer.HMusic;
 
 import java.io.IOException;
-import java.util.Queue;
 
 import org.springframework.http.ResponseEntity;
 
@@ -16,5 +15,6 @@ public interface MusicDownloaderService {
 
     public Boolean queueIsEmpty();
 
+    public void removeQueue();
 }
 
