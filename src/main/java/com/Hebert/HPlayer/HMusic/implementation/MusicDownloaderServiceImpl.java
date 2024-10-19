@@ -32,17 +32,32 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
         
         DownloadMusicResult result = new DownloadMusicResult();
 
+        String currentDirectory = System.getProperty("user.dir");
+        String cleanCode = YoutubeUtil.linkCodeGetter(YoutubeUtil.linkStandardization(request.getYoutubeLink())) + ".mp3";
+        File checkFile = new File(currentDirectory + "/tempMusics/" + cleanCode);
+
+        if (checkFile.exists()){
+            System.out.println("mp3 exists");
+            
+            result.setSuccess(true);
+            result.setMessage("mp3 exists");
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+
 
         if (musicDownloadQueue.isEmpty()){
             musicDownloadQueue.add(request);
             System.out.println("add and start thread");
             downloadMusic();
+            result.setMessage("add and start thread");
             
         }else{
             musicDownloadQueue.add(request);
             System.out.println("only add");
+            result.setMessage("only add");
         }
-        
+         
 
         result.setSuccess(true);
 
@@ -61,7 +76,8 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
         File checkFile = new File(currentDirectory + "/tempMusics/" + cleanCode);
 
         if (checkFile.exists()){
-            System.out.println("mp3 exists");
+            System.out.println("mp3 exists, aborting thread creation...");
+            return; 
         }
 
         MusicDownloadThread musicDownloadThread = new MusicDownloadThread(request, this, musicRepository);
@@ -89,3 +105,4 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
     
     
 }
+ 
