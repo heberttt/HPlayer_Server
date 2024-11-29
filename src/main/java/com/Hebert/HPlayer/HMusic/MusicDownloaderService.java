@@ -9,7 +9,7 @@ import com.Hebert.HPlayer.HMusic.results.DownloadMusicResult;
 
 public interface MusicDownloaderService {
 
-    public ResponseEntity<DownloadMusicResult> requestMusic(DownloadMusicRequest request) throws IOException, InterruptedException;
+    public ResponseEntity<DownloadMusicResult> requestMusic(DownloadMusicRequest request);
     
     public void downloadMusic() throws IOException, InterruptedException;
 

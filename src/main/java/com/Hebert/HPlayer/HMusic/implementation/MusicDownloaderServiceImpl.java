@@ -28,7 +28,7 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
     
     
     @Override
-    public ResponseEntity<DownloadMusicResult> requestMusic(DownloadMusicRequest request) throws IOException, InterruptedException {
+    public ResponseEntity<DownloadMusicResult> requestMusic(DownloadMusicRequest request) {
         
         DownloadMusicResult result = new DownloadMusicResult();
 
@@ -49,7 +49,14 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
         if (musicDownloadQueue.isEmpty()){
             musicDownloadQueue.add(request);
             System.out.println("add and start thread");
-            downloadMusic();
+            try{
+                downloadMusic();
+            }catch(IOException e){
+                System.out.println(e.toString());
+            }catch (InterruptedException e){
+                System.out.println(e.toString());
+            }
+            
             result.setMessage("add and start thread");
             
         }else{
