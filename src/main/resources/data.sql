@@ -1,7 +1,0 @@
-INSERT INTO users (username, role, password, email)
-VALUES
-('john_doe', 'user', 'password123', 'john@example.com'),
-('jane_smith', 'user', 'securepassword', 'jane@example.com'),
-('alice_jones', 'user', 'alicepwd', 'alice@example.com'),
-('bob_brown', 'user', 'bobpassword', 'bob@example.com'),
-('charlie_black', 'user', 'charliepass', 'charlie@example.com');

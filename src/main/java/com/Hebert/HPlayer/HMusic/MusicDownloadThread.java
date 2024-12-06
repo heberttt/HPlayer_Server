@@ -121,6 +121,9 @@ public class MusicDownloadThread implements Runnable{
                 System.out.println(e);
             }
 
+            musicDownloaderService.removeQueue();
+            System.out.println("removed queue");
+
             if (!musicDownloaderService.queueIsEmpty()){
                 musicDownloaderService.downloadMusic();
             }

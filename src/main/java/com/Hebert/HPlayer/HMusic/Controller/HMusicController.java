@@ -35,7 +35,7 @@ public class HMusicController {
     }
 
     @PostMapping("/downloadMusic")
-    public ResponseEntity<DownloadMusicResult> downloadMusic(@RequestBody DownloadMusicRequest request) throws IOException, InterruptedException {
+    public ResponseEntity<DownloadMusicResult> downloadMusic(@RequestBody DownloadMusicRequest request) {
         
 
         return musicDownloaderService.requestMusic(request);

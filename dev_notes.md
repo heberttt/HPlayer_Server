@@ -15,3 +15,13 @@
 ### Tip
 - Use a queue to process download request &check;
 - for all songs for user, just select all songs related to user name from playlist table
+
+### Port forward from remote server
+
+- ssh -L 8080:localhost:8080 username@server-ip
+
+
+### Change java version
+sudo update-alternatives --config java
+sudo update-alternatives --config javac
+
