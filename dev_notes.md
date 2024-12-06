@@ -19,3 +19,9 @@
 ### Port forward from remote server
 
 - ssh -L 8080:localhost:8080 username@server-ip
+
+
+### Change java version
+sudo update-alternatives --config java
+sudo update-alternatives --config javac
+
