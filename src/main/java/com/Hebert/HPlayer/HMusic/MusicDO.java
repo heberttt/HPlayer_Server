@@ -8,6 +8,7 @@ public class MusicDO {
     private String title;
     private Integer duration;
     private String lowThumbnailUrl;
+    private String mediumThumbnailUrl;
     private String highThumbnailUrl;
     
 
@@ -19,6 +20,11 @@ public class MusicDO {
         this.duration = duration;
         this.lowThumbnailUrl = lowThumbnailUrl;
         this.highThumbnailUrl = highThumbnailUrl;
+        this.mediumThumbnailUrl = lowThumbnailUrl.replace("default.jpg", "mqdefault.jpg");
+    }
+
+    public String getMediumThumbnailUrl(){
+        return mediumThumbnailUrl;
     }
 
     public String getLowThumbnailUrl() {
@@ -27,6 +33,7 @@ public class MusicDO {
 
     public void setLowThumbnailUrl(String lowThumbnailUrl) {
         this.lowThumbnailUrl = lowThumbnailUrl;
+        this.mediumThumbnailUrl = lowThumbnailUrl.replace("default.jpg", "mqdefault.jpg");
     }
 
     public String getHighThumbnailUrl() {
@@ -35,6 +42,7 @@ public class MusicDO {
 
     public void setHighThumbnailUrl(String highThumbnailUrl) {
         this.highThumbnailUrl = highThumbnailUrl;
+        this.mediumThumbnailUrl = highThumbnailUrl.replace("hqdefault.jpg", "mqdefault.jpg");
     }
 
     public String getLink_code() {

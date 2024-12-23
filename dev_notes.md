@@ -3,6 +3,8 @@
 ### Youtube Downloader
 - https://github.com/yt-dlp/yt-dlp#installation
 
+- TO get medium quality thumbnail change the file at the end of the path to mqdefault.jpg
+
 ### How to access postgresql in docker container
 
 1. `docker exec -it containerID bash`
@@ -24,4 +26,6 @@
 ### Change java version
 sudo update-alternatives --config java
 sudo update-alternatives --config javac
+
+
 
