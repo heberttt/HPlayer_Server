@@ -5,6 +5,9 @@
 
 - TO get medium quality thumbnail change the file at the end of the path to mqdefault.jpg
 
+### Reference
+- https://github.com/danvega/fcc-spring-boot-3/
+
 ### How to access postgresql in docker container
 
 1. `docker exec -it containerID bash`
