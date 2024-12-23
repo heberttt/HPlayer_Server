@@ -1,6 +1,7 @@
 package com.Hebert.HPlayer.HMusic.Controller;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 import org.springframework.core.io.Resource;
@@ -54,7 +55,6 @@ public class HMusicController {
         
     }
 
-
     @GetMapping("/data/{link}")
     public ResponseEntity<MusicDO> getMusicData(@PathVariable String link){
         return musicDataService.getMusicData(link);
@@ -65,6 +65,20 @@ public class HMusicController {
         return musicDataService.getAllMusicData();
     }
     
+    @GetMapping("/data/{youtubeCode}/thumbnail/low")
+    public ResponseEntity<Resource> getMusicLowThumbnail(@PathVariable String youtubeCode) throws MalformedURLException{
+        return musicDataService.getMusicLowThumbnail(youtubeCode);
+    }
+
+    @GetMapping("/data/{youtubeCode}/thumbnail/medium")
+    public ResponseEntity<Resource> getMusicMediumThumbnail(@PathVariable String youtubeCode) throws MalformedURLException{
+        return musicDataService.getMusicMediumThumbnail(youtubeCode);
+    }
+
+    @GetMapping("/data/{youtubeCode}/thumbnail/high")
+    public ResponseEntity<Resource> getMusicHighThumbnail(@PathVariable String youtubeCode) throws MalformedURLException{
+        return musicDataService.getMusicHighThumbnail(youtubeCode);
+    }
 
     
 

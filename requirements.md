@@ -19,7 +19,6 @@
 | duration | int|seconds|null
 | low_thumbnail_url | varchar|
 | high_thumbnail_url| varchar|
-|music_file| BYTEA|
 
 
 ### 3. download_requests
@@ -37,10 +36,14 @@
 |user_id|int|FK|
 |created_at| timestamp
 
+- upon playlist deletion playlist_song will also be removed (can use cronjob or deletion right after request)
+- new user creation will create a "Saved" playlist as a default playlist (not removable)
+
 
 ### 5. playlist_song
 |Variable | Data Type | Note|
 |:------|:-------:|:-----|
 |playlist_id|int|FK
 |song_id|int|FK
+
 

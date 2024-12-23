@@ -72,23 +72,18 @@ public class MusicDownloadThread implements Runnable{
         }else{
             MusicDO musicDO = new MusicDO();
 
-            String[] musicData = YoutubeDataApiConsumer.getTitleAndDuration(YoutubeUtil.linkCodeGetter(link));
+            List<String> musicData = YoutubeDataApiConsumer.getTitleAndDuration(YoutubeUtil.linkCodeGetter(link));
 
-            String musicTitle = musicData[0];
+            String musicTitle = musicData.get(0);
 
-            Integer musicDuration = YoutubeUtil.convertDurationIntoSeconds(musicData[1]);
+            Integer musicDuration =  YoutubeUtil.convertDurationIntoSeconds(musicData.get(1));
 
-            String musicLowThumbnailUrl = musicData[2];
-
-            String musicHighThumbnailUrl = musicData[3];
 
             musicDO.setTitle(musicTitle);
             musicDO.setDuration(musicDuration);
             musicDO.setLink_code(cleanLink);
-            musicDO.setLowThumbnailUrl(musicLowThumbnailUrl);
-            musicDO.setHighThumbnailUrl(musicHighThumbnailUrl);
 
-
+            YoutubeUtil.downloadThumbnail(cleanLink);
 
             try{
                 System.out.println("Adding music to repository...");
