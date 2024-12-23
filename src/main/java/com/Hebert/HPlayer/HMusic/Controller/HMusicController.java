@@ -1,6 +1,7 @@
 package com.Hebert.HPlayer.HMusic.Controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -57,6 +58,11 @@ public class HMusicController {
     @GetMapping("/data/{link}")
     public ResponseEntity<MusicDO> getMusicData(@PathVariable String link){
         return musicDataService.getMusicData(link);
+    }
+
+    @GetMapping("/data")
+    public ResponseEntity<List<MusicDO>> getAllMusicData(){
+        return musicDataService.getAllMusicData();
     }
     
 

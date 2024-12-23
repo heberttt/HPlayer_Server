@@ -46,8 +46,9 @@ public class MusicRepositoryImpl implements MusicRepository{
 
     @Override
     public List<MusicDO> findAllMusic() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAllMusic'");
+        return jdbcClient.sql("SELECT * FROM musics")
+                        .query(MusicDO.class)
+                        .list();
     }
 
     @Override

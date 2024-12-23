@@ -1,6 +1,7 @@
 package com.Hebert.HPlayer.HMusic.implementation;
 
 import java.net.http.HttpResponse;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,11 @@ public class MusicDataServiceImpl implements MusicDataService{
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @Override
+    public ResponseEntity<List<MusicDO>> getAllMusicData() {
+        return new ResponseEntity<>(musicRepository.findAllMusic(), HttpStatus.OK);
     }
     
 }
