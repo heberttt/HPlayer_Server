@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Hebert.HPlayer.HMusic.MusicDO;
+import com.Hebert.HPlayer.HMusic.MusicDataService;
 import com.Hebert.HPlayer.HMusic.MusicDownloaderService;
 import com.Hebert.HPlayer.HMusic.MusicStreamService;
 import com.Hebert.HPlayer.HMusic.requests.DownloadMusicRequest;
@@ -29,9 +31,12 @@ public class HMusicController {
 
     private final MusicDownloaderService musicDownloaderService;
 
-    public HMusicController(MusicDownloaderService musicDownloaderService, MusicStreamService musicStreamService){
+    private final MusicDataService musicDataService;
+
+    public HMusicController(MusicDownloaderService musicDownloaderService, MusicStreamService musicStreamService, MusicDataService musicDataService){
         this.musicDownloaderService = musicDownloaderService;
         this.musicStreamService = musicStreamService;
+        this.musicDataService = musicDataService;
     }
 
     @PostMapping("/downloadMusic")
@@ -46,6 +51,12 @@ public class HMusicController {
         
         return musicStreamService.streamMusic(request, rangeHeader);
         
+    }
+
+
+    @GetMapping("/data/{link}")
+    public ResponseEntity<MusicDO> getMusicData(@PathVariable String link){
+        return musicDataService.getMusicData(link);
     }
     
 
