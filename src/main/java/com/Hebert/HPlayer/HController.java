@@ -30,7 +30,7 @@ public class HController {
     
     @GetMapping
     public List<String> getHello() throws GoogleJsonResponseException, GeneralSecurityException, IOException{
-        return Arrays.asList(YoutubeDataApiConsumer.getTitleAndDuration("8jSBSS_Nk9A"));
+        return YoutubeDataApiConsumer.getTitleAndDuration("8jSBSS_Nk9A");
     }
 
     @GetMapping("/currentDirectory")

@@ -1,7 +1,8 @@
 package com.Hebert.HPlayer.HMusic.implementation;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -17,7 +18,7 @@ public class YoutubeDataApiConsumer {
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final String API_KEY = "AIzaSyCTETDRDZ_4NMafiYglWhYhy9jBvYspAmU";
 
-    public static String[] getTitleAndDuration(String youtubeCode) throws IOException {
+    public static List<String> getTitleAndDuration(String youtubeCode) throws IOException {
         
         YouTube youtubeService = new YouTube.Builder(new NetHttpTransport(), JSON_FACTORY, (HttpRequestInitializer) null)
                 .setApplicationName(APPLICATION_NAME)
@@ -33,12 +34,10 @@ public class YoutubeDataApiConsumer {
         
         Video video = response.getItems().get(0);
 
-        String[] result = new String[4];
+        List<String> result = new ArrayList<>();
 
-        result[0] = video.getSnippet().getTitle();
-        result[1] = video.getContentDetails().getDuration();
-        result[2] = video.getSnippet().getThumbnails().getDefault().getUrl(); //low quality
-        result[3] = video.getSnippet().getThumbnails().getHigh().getUrl();
+        result.add(video.getSnippet().getTitle());
+        result.add(video.getContentDetails().getDuration());
 
         return result;
 

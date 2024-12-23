@@ -1,40 +1,20 @@
 package com.Hebert.HPlayer.HMusic;
 
-
+import java.io.File;
 
 public class MusicDO {
 
     private String link_code;
     private String title;
     private Integer duration;
-    private String lowThumbnailUrl;
-    private String highThumbnailUrl;
     
 
     public MusicDO(){};
 
-    public MusicDO(String link_code, String title, Integer duration, String lowThumbnailUrl, String highThumbnailUrl){
+    public MusicDO(String link_code, String title, Integer duration){
         this.link_code = link_code;
         this.title = title;
         this.duration = duration;
-        this.lowThumbnailUrl = lowThumbnailUrl;
-        this.highThumbnailUrl = highThumbnailUrl;
-    }
-
-    public String getLowThumbnailUrl() {
-        return lowThumbnailUrl;
-    }
-
-    public void setLowThumbnailUrl(String lowThumbnailUrl) {
-        this.lowThumbnailUrl = lowThumbnailUrl;
-    }
-
-    public String getHighThumbnailUrl() {
-        return highThumbnailUrl;
-    }
-
-    public void setHighThumbnailUrl(String highThumbnailUrl) {
-        this.highThumbnailUrl = highThumbnailUrl;
     }
 
     public String getLink_code() {
