@@ -48,26 +48,43 @@ public class MusicDataServiceImpl implements MusicDataService{
     @Override
     public ResponseEntity<Resource> getMusicLowThumbnail(String youtubeCode) throws MalformedURLException {
         String fileLocation = System.getProperty("user.dir") + "/assets/thumbnails/low/" + youtubeCode + ".jpg";
-        Path path = Paths.get(fileLocation);
+        try{
+            Path path = Paths.get(fileLocation);
 
-        Resource resource = new UrlResource(path.toUri());
+            Resource resource = new UrlResource(path.toUri());
 
-        return ResponseEntity.ok()
+            if (!resource.exists()){
+                throw new FileNotFoundException();
+            }
+
+            return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(resource);
-
+                
+        }catch(FileNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Override
     public ResponseEntity<Resource> getMusicMediumThumbnail(String youtubeCode) throws MalformedURLException {
         String fileLocation = System.getProperty("user.dir") + "/assets/thumbnails/medium/" + youtubeCode + ".jpg";
-        Path path = Paths.get(fileLocation);
+        try{
+            Path path = Paths.get(fileLocation);
 
-        Resource resource = new UrlResource(path.toUri());
+            Resource resource = new UrlResource(path.toUri());
 
-        return ResponseEntity.ok()
+            if (!resource.exists()){
+                throw new FileNotFoundException();
+            }
+
+            return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(resource);
+                
+        }catch(FileNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Override
@@ -86,7 +103,7 @@ public class MusicDataServiceImpl implements MusicDataService{
             return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(resource);
-                
+
         }catch(FileNotFoundException e){
             return ResponseEntity.notFound().build();
         }
