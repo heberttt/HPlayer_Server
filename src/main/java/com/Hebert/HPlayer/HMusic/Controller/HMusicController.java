@@ -65,17 +65,17 @@ public class HMusicController {
         return musicDataService.getAllMusicData();
     }
     
-    @GetMapping("/data/{youtubeCode}/thumbnail/low")
+    @GetMapping("/data/thumbnail/{youtubeCode}/low")
     public ResponseEntity<Resource> getMusicLowThumbnail(@PathVariable String youtubeCode) throws MalformedURLException{
         return musicDataService.getMusicLowThumbnail(youtubeCode);
     }
 
-    @GetMapping("/data/{youtubeCode}/thumbnail/medium")
+    @GetMapping("/data/thumbnail/{youtubeCode}/medium")
     public ResponseEntity<Resource> getMusicMediumThumbnail(@PathVariable String youtubeCode) throws MalformedURLException{
         return musicDataService.getMusicMediumThumbnail(youtubeCode);
     }
 
-    @GetMapping("/data/{youtubeCode}/thumbnail/high")
+    @GetMapping("/data/thumbnail/{youtubeCode}/high")
     public ResponseEntity<Resource> getMusicHighThumbnail(@PathVariable String youtubeCode) throws MalformedURLException{
         return musicDataService.getMusicHighThumbnail(youtubeCode);
     }

@@ -1,5 +1,6 @@
 package com.Hebert.HPlayer.HMusic.implementation;
 
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.net.http.HttpResponse;
 import java.nio.file.Path;
@@ -72,13 +73,27 @@ public class MusicDataServiceImpl implements MusicDataService{
     @Override
     public ResponseEntity<Resource> getMusicHighThumbnail(String youtubeCode) throws MalformedURLException {
         String fileLocation = System.getProperty("user.dir") + "/assets/thumbnails/high/" + youtubeCode + ".jpg";
-        Path path = Paths.get(fileLocation);
 
-        Resource resource = new UrlResource(path.toUri());
+        try{
+            Path path = Paths.get(fileLocation);
 
-        return ResponseEntity.ok()
+            Resource resource = new UrlResource(path.toUri());
+
+            if (!resource.exists()){
+                throw new FileNotFoundException();
+            }
+
+            return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(resource);
+                
+        }catch(FileNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
+
+        
+
+        
     }
     
 }
