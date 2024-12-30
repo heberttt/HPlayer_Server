@@ -38,6 +38,7 @@ public class YoutubeDataApiConsumer {
 
         result.add(video.getSnippet().getTitle());
         result.add(video.getContentDetails().getDuration());
+        result.add(video.getSnippet().getChannelTitle());
 
         return result;
 

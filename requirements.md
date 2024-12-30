@@ -15,10 +15,9 @@
 |Variable | Data Type | Note|
 |:------|:-------:|:-----|
 | link_code (PK)| varchar|
-| title | varchar|null
+| title | varchar|null|
+| channel_name| varchar|
 | duration | int|seconds|null
-| low_thumbnail_url | varchar|
-| high_thumbnail_url| varchar|
 
 
 ### 3. download_requests

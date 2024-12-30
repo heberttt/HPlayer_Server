@@ -23,8 +23,8 @@ public class MusicRepositoryImpl implements MusicRepository{
 
     @Override
     public void addMusic(MusicDO music) {
-        var updated = jdbcClient.sql("INSERT INTO musics(link_code, title, duration) VALUES(?,?,?)")
-                        .params(List.of(music.getLink_code(), music.getTitle(), music.getDuration()))
+        var updated = jdbcClient.sql("INSERT INTO musics(link_code, title, channel_name ,duration) VALUES(?,?,?,?)")
+                        .params(List.of(music.getLink_code(), music.getTitle(), music.getChannelName(), music.getDuration()))
                         .update();
 
         Assert.state(updated == 1, "Failed to insert new music: " + music.getTitle());
@@ -53,7 +53,7 @@ public class MusicRepositoryImpl implements MusicRepository{
 
     @Override
     public Optional<MusicDO> queryMusicDetails(String code) {
-        return jdbcClient.sql("SELECT link_code, title, duration FROM musics WHERE link_code = :link_code")
+        return jdbcClient.sql("SELECT link_code, title, duration, channel_name FROM musics WHERE link_code = :link_code")
                         .param("link_code", code)
                         .query(MusicDO.class)
                         .optional();

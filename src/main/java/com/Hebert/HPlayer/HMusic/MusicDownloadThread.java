@@ -77,11 +77,13 @@ public class MusicDownloadThread implements Runnable{
             String musicTitle = musicData.get(0);
 
             Integer musicDuration =  YoutubeUtil.convertDurationIntoSeconds(musicData.get(1));
-
+            
+            String musicChannelName = musicData.get(2);
 
             musicDO.setTitle(musicTitle);
             musicDO.setDuration(musicDuration);
             musicDO.setLink_code(cleanLink);
+            musicDO.setChannelName(musicChannelName);
 
             YoutubeUtil.downloadThumbnail(cleanLink);
 
@@ -91,26 +93,6 @@ public class MusicDownloadThread implements Runnable{
                 musicRepository.addMusic(musicDO);
 
                 System.out.println("Music added");
-
-                
-
-                // List<String> cleanCommand = List.of("rm", currentDirectory + "/tempMusics/" + cleanLink + ".mp3");
-            
-                // ProcessBuilder cleanProcessBuilder = new ProcessBuilder(cleanCommand);
-
-                // cleanProcessBuilder.redirectErrorStream(true);
-                // cleanProcessBuilder.inheritIO();
-
-                // Process cleanProcess = cleanProcessBuilder.start();
-                    
-                // cleanProcess.waitFor();
-
-                // MusicDO musicDetails = musicRepository.queryMusicDetails(cleanLink).get();
-
-                // success = true;
-
-                // result.setSuccess(success);
-                // result.setResult(musicDetails);
                 
             }catch(Exception e){
                 System.out.println(e);
