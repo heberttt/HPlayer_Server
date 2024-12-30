@@ -22,6 +22,8 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
     @Autowired
     MusicRepository musicRepository;
 
+    Thread downloadThread;
+
     
     private volatile Queue<DownloadMusicRequest> musicDownloadQueue = new LinkedList<>();
 
@@ -60,9 +62,20 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
             result.setMessage("add and start thread");
             
         }else{
-            musicDownloadQueue.add(request);
-            System.out.println("only add");
-            result.setMessage("only add");
+            if(downloadThread.isAlive()){
+                musicDownloadQueue.add(request);
+                System.out.println("only add");
+                result.setMessage("only add");
+            }else{
+                musicDownloadQueue.add(request);
+                try {
+                    downloadMusic();
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("only add and make new thread");
+                result.setMessage("only add and make new thread");
+            }
         }
          
 
@@ -89,7 +102,7 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
 
         MusicDownloadThread musicDownloadThread = new MusicDownloadThread(request, this, musicRepository);
 
-        Thread downloadThread = new Thread(musicDownloadThread);
+        downloadThread = new Thread(musicDownloadThread);
 
         downloadThread.start();
 
