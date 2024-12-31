@@ -46,8 +46,7 @@ public class MusicDownloadThread implements Runnable{
 
         //check if exist
 
-        
-
+        String currentDirectory = System.getProperty("user.dir");
 
 
         List<String> command = List.of("yt-dlp", "-x", "--audio-format", "mp3", "-o", cleanLink, link);
@@ -57,8 +56,9 @@ public class MusicDownloadThread implements Runnable{
         processBuilder.redirectErrorStream(true);
         processBuilder.inheritIO();
 
-        String currentDirectory = System.getProperty("user.dir");
-        
+        File logFile = new File(currentDirectory + "/logs/yt-dlp_output.txt");
+        processBuilder.redirectOutput(logFile);
+
         processBuilder.directory(new File(currentDirectory + "/tempMusics/"));
 
         Process process = processBuilder.start();
