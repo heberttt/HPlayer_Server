@@ -1,14 +1,0 @@
-Permission error while accessing modules in "/home/himagi/Documents/project/HPlayer_Server/tempMusics/yt_dlp_plugins"
-Permission error while accessing modules in "/home/himagi/Documents/project/HPlayer_Server/tempMusics/yt_dlp_plugins"
-[youtube] Extracting URL: https://www.youtube.com/watch?v=5rkJhg9IpRU
-[youtube] 5rkJhg9IpRU: Downloading webpage
-[youtube] 5rkJhg9IpRU: Downloading ios player API JSON
-[youtube] 5rkJhg9IpRU: Downloading mweb player API JSON
-[youtube] 5rkJhg9IpRU: Downloading player 03dbdfab
-WARNING: [youtube] 5rkJhg9IpRU: Signature extraction failed: Some formats may be missing
-[youtube] 5rkJhg9IpRU: Downloading m3u8 information
-[info] 5rkJhg9IpRU: Downloading 1 format(s): 251
-[download] Destination: 5rkJhg9IpRU
-[download]   0.0% of    2.26MiB at  117.94KiB/s ETA 00:19[download]   0.1% of    2.26MiB at  296.75KiB/s ETA 00:07[download]   0.3% of    2.26MiB at  621.68KiB/s ETA 00:03[download]   0.6% of    2.26MiB at    1.17MiB/s ETA 00:01[download]   1.3% of    2.26MiB at    2.18MiB/s ETA 00:01[download]   2.7% of    2.26MiB at    2.45MiB/s ETA 00:00[download]   5.5% of    2.26MiB at    2.06MiB/s ETA 00:01[download]  11.0% of    2.26MiB at    1.91MiB/s ETA 00:01[download]  22.1% of    2.26MiB at    1.66MiB/s ETA 00:01[download]  44.3% of    2.26MiB at    1.77MiB/s ETA 00:00[download]  88.6% of    2.26MiB at    1.94MiB/s ETA 00:00[download] 100.0% of    2.26MiB at    1.98MiB/s ETA 00:00[download] 100% of    2.26MiB in 00:00:01 at 1.85MiB/s   
-[ExtractAudio] Destination: 5rkJhg9IpRU.mp3
-Deleting original file 5rkJhg9IpRU (pass -k to keep)
