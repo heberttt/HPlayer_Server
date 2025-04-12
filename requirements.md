@@ -33,7 +33,9 @@
 |playlist_id|int|PK|
 |playlist_name|varchar
 |user_id|int|FK|
-|created_at| timestamp
+|created_at| timestamp|
+
+- created with "ON DELETE CASCADE" for userid: will delete row if userid is also deleted in users table
 
 - upon playlist deletion playlist_song will also be removed (can use cronjob or deletion right after request)
 - new user creation will create a "Saved" playlist as a default playlist (not removable)
