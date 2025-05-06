@@ -25,6 +25,10 @@
 
 - ssh -L 8080:localhost:8080 username@server-ip
 
+### Microservices
+https://www.youtube.com/playlist?list=PLsyeobzWxl7rRyGcqgZ3MP5pWGPwUvprI
+
+- contains service discovery (eureka), microservices tutorial
 
 ### Change java version
 sudo update-alternatives --config java
