@@ -22,11 +22,6 @@ import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 @RequestMapping("/test")
 public class HController {
 
-    private final HUserRepositoryImpl hUserRepository;
-
-    public HController(HUserRepositoryImpl hUserRepository){
-        this.hUserRepository = hUserRepository;
-    }
     
     @GetMapping
     public List<String> getHello() throws GoogleJsonResponseException, GeneralSecurityException, IOException{
@@ -50,16 +45,6 @@ public class HController {
         @RequestBody String request
     ){
         return request;
-    }
-
-    @GetMapping("/user/email")
-    public HUserDO getUserByEmail(@RequestParam String email){
-        Optional<HUserDO> result = hUserRepository.findByEmail(email);
-        if (result == null){
-            throw new RuntimeException("no user found");
-        }
-
-        return result.get();
     }
 
 }
