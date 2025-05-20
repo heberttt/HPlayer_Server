@@ -41,14 +41,14 @@ public class HMusicController {
         this.musicDataService = musicDataService;
     }
 
-    @PostMapping("/downloadMusic")
+    @PostMapping("/download")
     public ResponseEntity<DownloadMusicResult> downloadMusic(@RequestBody DownloadMusicRequest request) {
         
 
         return musicDownloaderService.requestMusic(request);
     }
 
-    @GetMapping("/streamMusic/{request}")
+    @GetMapping("/stream/{request}")
     public ResponseEntity<Resource> streamMusic(@PathVariable String request, @RequestHeader(value = "Range", required = false) String rangeHeader) throws IOException {
         
         return musicStreamService.streamMusic(request, rangeHeader);

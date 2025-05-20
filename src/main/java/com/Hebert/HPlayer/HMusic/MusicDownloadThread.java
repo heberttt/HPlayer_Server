@@ -57,7 +57,7 @@ public class MusicDownloadThread implements Runnable{
         processBuilder.inheritIO();
 
         File logFile = new File(currentDirectory + "/logs/yt-dlp_output.txt");
-        processBuilder.redirectOutput(logFile);
+        processBuilder.redirectOutput(ProcessBuilder.Redirect.appendTo(logFile));
 
         processBuilder.directory(new File(currentDirectory + "/tempMusics/"));
 

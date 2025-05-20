@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Hebert.HPlayer.HMusic.implementation.YoutubeDataApiConsumer;
-import com.Hebert.HPlayer.login.HUserDO;
-import com.Hebert.HPlayer.login.HUserRepositoryImpl;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 
 @RestController

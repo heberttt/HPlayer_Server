@@ -44,7 +44,7 @@ public class MusicDownloaderServiceImpl implements MusicDownloaderService{
             result.setSuccess(true);
             result.setMessage("mp3 exists");
 
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return new ResponseEntity<>(result, HttpStatus.FOUND);
         }
 
 
