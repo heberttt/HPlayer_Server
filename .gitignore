@@ -37,4 +37,4 @@ tempMusics/
 .env
 .mp3
 
-/logs/yt-dlp_output.txt
+logs/
