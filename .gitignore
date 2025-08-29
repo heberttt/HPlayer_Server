@@ -38,3 +38,5 @@ tempMusics/
 .mp3
 
 logs/
+
+.venv/
