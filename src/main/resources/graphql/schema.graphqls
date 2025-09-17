@@ -1,3 +1,12 @@
 type Query{
-    
+    musics: [Music]
+
+    musicByLinkCode(link_code: String!): Music
+}
+
+type Music {
+    link_code: String
+    title: String
+    channelName: String
+    duration: Int
 }
