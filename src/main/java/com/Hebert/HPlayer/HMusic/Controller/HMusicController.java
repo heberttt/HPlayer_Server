@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import com.Hebert.HPlayer.HMusic.results.GetPresignedMusicUrlResult;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,11 +41,18 @@ public class HMusicController {
         this.musicDataService = musicDataService;
     }
 
-    @PostMapping("/downloadMusic")
-    public ResponseEntity<DownloadMusicResult> downloadMusic(@RequestBody DownloadMusicRequest request) {
-        
+    @PostMapping("/download")
+    public ResponseEntity<DownloadMusicResult> requestMusic(@RequestBody DownloadMusicRequest request) {
+        DownloadMusicResult result = musicDownloaderService.requestMusic(request);
 
-        return musicDownloaderService.requestMusic(request);
+        return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatusCode()));
+    }
+
+    @GetMapping("/{youtubeCode}/url")
+    public ResponseEntity<GetPresignedMusicUrlResult> getPresignedMusicUrl(@PathVariable String youtubeCode){
+        GetPresignedMusicUrlResult result = musicDownloaderService.getPresignedMusicUrl(youtubeCode);
+
+        return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatusCode()));
     }
 
     @GetMapping("/streamMusic/{request}")

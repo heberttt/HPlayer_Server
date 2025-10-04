@@ -16,7 +16,9 @@ public class YoutubeDataApiConsumer {
 
     private static final String APPLICATION_NAME = "HPlayer";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final String API_KEY = "AIzaSyCTETDRDZ_4NMafiYglWhYhy9jBvYspAmU";
+
+    
+    private static final String API_KEY = "null"; 
 
     public static List<String> getTitleAndDuration(String youtubeCode) throws IOException {
         

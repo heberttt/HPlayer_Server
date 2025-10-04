@@ -39,7 +39,7 @@ public class MusicStreamServiceImpl implements MusicStreamService{
 
             requestedMusicDetails = queriedMusicDetails.get();
             
-            File musicFile = new File(currentDirectory + "/tempMusics/" + requestedMusicDetails.getLink_code() + ".mp3");
+            File musicFile = new File(currentDirectory + "/tempMusics/" + requestedMusicDetails.getMusicId() + ".mp3");
 
             if (!musicFile.exists()) {
                 System.out.println("mp3 does not exist");

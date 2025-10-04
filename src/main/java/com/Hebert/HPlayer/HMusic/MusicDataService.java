@@ -16,4 +16,6 @@ public interface MusicDataService {
     public ResponseEntity<Resource> getMusicMediumThumbnail(String youtubeCode) throws MalformedURLException;
 
     public ResponseEntity<Resource> getMusicHighThumbnail(String youtubeCode) throws MalformedURLException;
+
+    public Boolean addMusic(MusicDO music);
 }

@@ -23,8 +23,8 @@ public class MusicRepositoryImpl implements MusicRepository{
 
     @Override
     public void addMusic(MusicDO music) {
-        var updated = jdbcClient.sql("INSERT INTO musics(link_code, title, channel_name ,duration) VALUES(?,?,?,?)")
-                        .params(List.of(music.getLink_code(), music.getTitle(), music.getChannelName(), music.getDuration()))
+        var updated = jdbcClient.sql("INSERT INTO musics(music_id, title, channel_name ,duration) VALUES(?,?,?,?)")
+                        .params(List.of(music.getMusicId(), music.getTitle(), music.getChannelName(), music.getDuration()))
                         .update();
 
         Assert.state(updated == 1, "Failed to insert new music: " + music.getTitle());
@@ -32,16 +32,16 @@ public class MusicRepositoryImpl implements MusicRepository{
 
     @Override
     public void deleteMusicByCode(MusicDO music) {
-        if (StringUtils.hasText(music.getLink_code())){
+        if (StringUtils.hasText(music.getMusicId())){
             throw new YoutubeLinkException("No link code found");
         }
 
-        var updated = jdbcClient.sql("DELETE FROM musics WHERE link_code = :link_code")
-                                .param("link_code", music.getLink_code())
+        var updated = jdbcClient.sql("DELETE FROM musics WHERE music_id = :music_id")
+                                .param("music_id", music.getMusicId())
                                 .update();
 
 
-        Assert.state(updated == 1, "Failed to delete music: " + music.getLink_code());
+        Assert.state(updated == 1, "Failed to delete music: " + music.getMusicId());
     }
 
     @Override
@@ -53,8 +53,8 @@ public class MusicRepositoryImpl implements MusicRepository{
 
     @Override
     public Optional<MusicDO> queryMusicDetails(String code) {
-        return jdbcClient.sql("SELECT link_code, title, duration, channel_name FROM musics WHERE link_code = :link_code")
-                        .param("link_code", code)
+        return jdbcClient.sql("SELECT music_id, title, duration, channel_name FROM musics WHERE music_id = :music_id")
+                        .param("music_id", code)
                         .query(MusicDO.class)
                         .optional();
     }
