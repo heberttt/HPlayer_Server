@@ -1,12 +1,10 @@
 package com.Hebert.HPlayer.HMusic.implementation;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import com.Hebert.HPlayer.HMusic.MusicRepository;
 import com.Hebert.HPlayer.HMusic.Storage.MinioService;
 import com.Hebert.HPlayer.HMusic.results.GetPresignedMusicUrlResult;
-import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import com.Hebert.HPlayer.HMusic.MusicDownloaderService;
@@ -22,12 +20,9 @@ public class MusicDownloaderQueueServiceImpl implements MusicDownloaderService {
 
     private final MusicRepository musicRepository;
 
-    private final MinioService minioService;
-
-    public MusicDownloaderQueueServiceImpl(KafkaTemplate<String, YoutubeDownloadRequestMessage> kafkaTemplate, MusicRepository musicRepository, MinioService minioService) {
+    public MusicDownloaderQueueServiceImpl(KafkaTemplate<String, YoutubeDownloadRequestMessage> kafkaTemplate, MusicRepository musicRepository) {
         this.kafkaTemplate = kafkaTemplate;
         this.musicRepository = musicRepository;
-        this.minioService = minioService;
     }
 
     @Override
@@ -40,6 +35,12 @@ public class MusicDownloaderQueueServiceImpl implements MusicDownloaderService {
             result.setStatusCode(400);
             result.setMessage("Youtube link is empty");
             
+            return result;
+        }
+
+        if (musicRepository.queryMusicDetails(YoutubeUtil.linkCodeGetter(YoutubeUtil.linkStandardization(request.getYoutubeLink()))).isPresent()){
+            result.setFail("Music already exists", 400);
+
             return result;
         }
         
@@ -55,32 +56,7 @@ public class MusicDownloaderQueueServiceImpl implements MusicDownloaderService {
         return result;
     }
 
-    @Override
-    public GetPresignedMusicUrlResult getPresignedMusicUrl(String youtubeCode) {
 
-        GetPresignedMusicUrlResult result = new GetPresignedMusicUrlResult();
-
-        try{
-            if(!minioService.fileExists("file/" + youtubeCode + ".mp3")){
-                throw new FileNotFoundException("File does not exist in minio");
-            }
-
-            String url = minioService.getPresignedUrl("file/" + youtubeCode + ".mp3", 7200); // Duration 2 hours
-
-            result.setSuccess(null, 200);
-
-            result.setPresignedUrl(url);
-
-            return result;
-
-        } catch (Exception e) {
-            System.out.println("Error getting presigned music url: " + e.getMessage());
-
-            result.setFail(e.getMessage(), 500);
-
-            return result;
-        }
-    }
 
 
 }

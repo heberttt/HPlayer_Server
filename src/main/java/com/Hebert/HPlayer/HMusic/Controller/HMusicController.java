@@ -1,23 +1,20 @@
 package com.Hebert.HPlayer.HMusic.Controller;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import com.Hebert.HPlayer.HMusic.*;
 import com.Hebert.HPlayer.HMusic.results.GetPresignedMusicUrlResult;
+import com.Hebert.HPlayer.HMusic.results.GetPresignedThumbnailUrlResult;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Hebert.HPlayer.HMusic.MusicDO;
-import com.Hebert.HPlayer.HMusic.MusicDataService;
-import com.Hebert.HPlayer.HMusic.MusicDownloaderService;
-import com.Hebert.HPlayer.HMusic.MusicStreamService;
 import com.Hebert.HPlayer.HMusic.requests.DownloadMusicRequest;
 import com.Hebert.HPlayer.HMusic.results.DownloadMusicResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,17 +47,17 @@ public class HMusicController {
 
     @GetMapping("/{youtubeCode}/url")
     public ResponseEntity<GetPresignedMusicUrlResult> getPresignedMusicUrl(@PathVariable String youtubeCode){
-        GetPresignedMusicUrlResult result = musicDownloaderService.getPresignedMusicUrl(youtubeCode);
+        GetPresignedMusicUrlResult result = musicDataService.getMusicPresignedUrl(youtubeCode);
 
         return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatusCode()));
     }
 
-    @GetMapping("/streamMusic/{request}")
-    public ResponseEntity<Resource> streamMusic(@PathVariable String request, @RequestHeader(value = "Range", required = false) String rangeHeader) throws IOException {
-        
-        return musicStreamService.streamMusic(request, rangeHeader);
-        
-    }
+//    @GetMapping("/streamMusic/{request}")
+//    public ResponseEntity<Resource> streamMusic(@PathVariable String request, @RequestHeader(value = "Range", required = false) String rangeHeader) throws IOException {
+//
+//        return musicStreamService.streamMusic(request, rangeHeader);
+//
+//    }
 
     @GetMapping("/data/{link}")
     public ResponseEntity<MusicDO> getMusicData(@PathVariable String link){
@@ -72,21 +69,26 @@ public class HMusicController {
         return musicDataService.getAllMusicData();
     }
     
-    @GetMapping("/data/thumbnail/{youtubeCode}/low")
-    public ResponseEntity<Resource> getMusicLowThumbnail(@PathVariable String youtubeCode) throws MalformedURLException{
-        return musicDataService.getMusicLowThumbnail(youtubeCode);
-    }
+    @GetMapping("/data/thumbnail/{musicId}/{quality}")
+    public ResponseEntity<GetPresignedThumbnailUrlResult> getMusicLowThumbnail(@PathVariable String musicId, @PathVariable String quality) throws MalformedURLException{
+        GetPresignedThumbnailUrlResult result;
 
-    @GetMapping("/data/thumbnail/{youtubeCode}/medium")
-    public ResponseEntity<Resource> getMusicMediumThumbnail(@PathVariable String youtubeCode) throws MalformedURLException{
-        return musicDataService.getMusicMediumThumbnail(youtubeCode);
-    }
+        switch (quality){
+            case "low":
+                result = musicDataService.getThumbnailPresignedUrl(musicId, ThumbnailQuality.LOW);
+                break;
+            case "medium":
+                result = musicDataService.getThumbnailPresignedUrl(musicId, ThumbnailQuality.MEDIUM);
+                break;
+            case "high":
+                result = musicDataService.getThumbnailPresignedUrl(musicId, ThumbnailQuality.HIGH);
+                break;
+            default:
+                return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+        }
 
-    @GetMapping("/data/thumbnail/{youtubeCode}/high")
-    public ResponseEntity<Resource> getMusicHighThumbnail(@PathVariable String youtubeCode) throws MalformedURLException{
-        return musicDataService.getMusicHighThumbnail(youtubeCode);
-    }
+        return new ResponseEntity<>(result, HttpStatusCode.valueOf(result.getStatusCode()));
 
-    
+    }
 
 }

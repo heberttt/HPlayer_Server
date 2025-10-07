@@ -1,7 +1,4 @@
 
-DROP TABLE users;
-DROP TABLE musics;
-
 CREATE TABLE IF NOT EXISTS users(
     id SERIAL PRIMARY KEY,
     username VARCHAR(255) NOT NULL,

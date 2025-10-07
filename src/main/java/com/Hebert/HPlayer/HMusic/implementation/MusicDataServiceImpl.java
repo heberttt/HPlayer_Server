@@ -8,8 +8,13 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
+import com.Hebert.HPlayer.HMusic.Storage.MinioService;
+import com.Hebert.HPlayer.HMusic.ThumbnailQuality;
+import com.Hebert.HPlayer.HMusic.results.GetPresignedMusicUrlResult;
+import com.Hebert.HPlayer.HMusic.results.GetPresignedThumbnailUrlResult;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +29,11 @@ public class MusicDataServiceImpl implements MusicDataService{
 
     private final MusicRepository musicRepository;
 
-    public MusicDataServiceImpl(MusicRepository musicRepository){
+    private final MinioService minioService;
+
+    public MusicDataServiceImpl(MusicRepository musicRepository, MinioService minioService){
         this.musicRepository = musicRepository;
+        this.minioService = minioService;
     }
 
     @Override
@@ -45,71 +53,60 @@ public class MusicDataServiceImpl implements MusicDataService{
     }
 
     @Override
-    public ResponseEntity<Resource> getMusicLowThumbnail(String youtubeCode) throws MalformedURLException {
-        String fileLocation = System.getProperty("user.dir") + "/assets/thumbnails/low/" + youtubeCode + ".jpg";
+    public GetPresignedThumbnailUrlResult getThumbnailPresignedUrl(String musicId, ThumbnailQuality quality) {
+
+        GetPresignedThumbnailUrlResult result = new GetPresignedThumbnailUrlResult();
+
         try{
-            Path path = Paths.get(fileLocation);
-
-            Resource resource = new UrlResource(path.toUri());
-
-            if (!resource.exists()){
-                throw new FileNotFoundException();
+            if (!minioService.fileExists("thumbnail/" + quality.toString().toLowerCase() + "/" + musicId + ".jpg")){
+                result.setFail("File not found", 404);
+                return result;
             }
 
-            return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(resource);
-                
-        }catch(FileNotFoundException e){
-            return ResponseEntity.notFound().build();
+            String url = minioService.getThumbnailPresignedUrl(musicId, 3600 * 72, quality);
+
+            result.setSuccess(null, 200);
+
+            result.setPresignedUrl(url);
+
+            return result;
+
+        } catch (Exception e) {
+            System.out.println("Error getting presigned thumbnail url: " + e.getMessage());
+
+            result.setFail(e.getMessage(), 500);
+
+            return result;
         }
+
     }
 
     @Override
-    public ResponseEntity<Resource> getMusicMediumThumbnail(String youtubeCode) throws MalformedURLException {
-        String fileLocation = System.getProperty("user.dir") + "/assets/thumbnails/medium/" + youtubeCode + ".jpg";
-        try{
-            Path path = Paths.get(fileLocation);
+    public GetPresignedMusicUrlResult getMusicPresignedUrl(String youtubeCode) {
 
-            Resource resource = new UrlResource(path.toUri());
-
-            if (!resource.exists()){
-                throw new FileNotFoundException();
-            }
-
-            return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(resource);
-                
-        }catch(FileNotFoundException e){
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @Override
-    public ResponseEntity<Resource> getMusicHighThumbnail(String youtubeCode) throws MalformedURLException {
-        String fileLocation = System.getProperty("user.dir") + "/assets/thumbnails/high/" + youtubeCode + ".jpg";
+        GetPresignedMusicUrlResult result = new GetPresignedMusicUrlResult();
 
         try{
-            Path path = Paths.get(fileLocation);
-
-            Resource resource = new UrlResource(path.toUri());
-
-            if (!resource.exists()){
-                throw new FileNotFoundException();
+            if(!minioService.fileExists("file/" + youtubeCode + ".mp3")){
+                result.setFail("File not found", 404);
+                return result;
             }
 
-            return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(resource);
+            String url = minioService.getMusicPresignedUrl( youtubeCode, 7200); // Duration 2 hours
 
-        }catch(FileNotFoundException e){
-            return ResponseEntity.notFound().build();
+            result.setSuccess(null, 200);
+
+            result.setPresignedUrl(url);
+
+            return result;
+
+        } catch (Exception e) {
+            System.out.println("Error getting presigned music url: " + e.getMessage());
+
+            result.setFail(e.getMessage(), 500);
+
+            return result;
         }
-
-        
-
-        
     }
 
     @Override
@@ -118,7 +115,11 @@ public class MusicDataServiceImpl implements MusicDataService{
             musicRepository.addMusic(music);
 
             return true;
-        } catch (Exception e) {
+        } catch (DuplicateKeyException e) {
+            System.out.println("Music record already exists, returning as true");
+            return true;
+        }
+        catch (Exception e) {
             System.out.println("Error adding music: " + e.getMessage());
 
             return false;

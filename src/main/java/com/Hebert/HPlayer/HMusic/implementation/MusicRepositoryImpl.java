@@ -3,6 +3,7 @@ package com.Hebert.HPlayer.HMusic.implementation;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
@@ -22,7 +23,7 @@ public class MusicRepositoryImpl implements MusicRepository{
     }
 
     @Override
-    public void addMusic(MusicDO music) {
+    public void addMusic(MusicDO music) throws DuplicateKeyException {
         var updated = jdbcClient.sql("INSERT INTO musics(music_id, title, channel_name ,duration) VALUES(?,?,?,?)")
                         .params(List.of(music.getMusicId(), music.getTitle(), music.getChannelName(), music.getDuration()))
                         .update();

@@ -1,5 +1,6 @@
 package com.Hebert.HPlayer.HMusic.Storage;
 
+import com.Hebert.HPlayer.HMusic.ThumbnailQuality;
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
 import io.minio.StatObjectArgs;
@@ -7,6 +8,8 @@ import io.minio.StatObjectResponse;
 import io.minio.http.Method;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 @Component
 public class MinioService {
@@ -48,18 +51,35 @@ public class MinioService {
         }
     }
 
-    public String getPresignedUrl(String filePath, int duration){
+    public String getMusicPresignedUrl(String musicId, int duration){
         try{
             return minioClient.getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
                             .method(Method.GET)
                             .bucket(bucket)
-                            .object(filePath)
+                            .object("file/" + musicId + ".mp3")
                             .expiry(duration) // in seconds
+                            .extraQueryParams(Map.of("response-content-type", "audio/mpeg"))
                             .build()
             );
         } catch (Exception e) {
-            System.out.println("Get presigned url error: " + e.toString());
+            System.out.println("Get music presigned url error: " + e.toString());
+            return null;
+        }
+    }
+
+    public String getThumbnailPresignedUrl(String musicId, int duration, ThumbnailQuality quality){
+        try{
+            return minioClient.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .method(Method.GET)
+                            .bucket(bucket)
+                            .expiry(duration)
+                            .object("thumbnail/" + quality.toString().toLowerCase() + "/" + musicId + ".jpg")
+                            .build()
+            );
+        } catch (Exception e) {
+            System.out.println("Get thumbnail presigned url error: " + e.toString());
             return null;
         }
     }
