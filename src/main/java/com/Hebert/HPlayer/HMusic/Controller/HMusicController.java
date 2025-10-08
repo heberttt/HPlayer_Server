@@ -68,27 +68,27 @@ public class HMusicController {
     public ResponseEntity<List<MusicDO>> getAllMusicData(){
         return musicDataService.getAllMusicData();
     }
-    
-    @GetMapping("/data/thumbnail/{musicId}/{quality}")
-    public ResponseEntity<GetPresignedThumbnailUrlResult> getMusicLowThumbnail(@PathVariable String musicId, @PathVariable String quality) throws MalformedURLException{
-        GetPresignedThumbnailUrlResult result;
 
-        switch (quality){
-            case "low":
-                result = musicDataService.getThumbnailPresignedUrl(musicId, ThumbnailQuality.LOW);
-                break;
-            case "medium":
-                result = musicDataService.getThumbnailPresignedUrl(musicId, ThumbnailQuality.MEDIUM);
-                break;
-            case "high":
-                result = musicDataService.getThumbnailPresignedUrl(musicId, ThumbnailQuality.HIGH);
-                break;
-            default:
-                return new ResponseEntity<>(HttpStatusCode.valueOf(404));
-        }
-
-        return new ResponseEntity<>(result, HttpStatusCode.valueOf(result.getStatusCode()));
-
-    }
+//    @GetMapping("/data/thumbnail/{musicId}/{quality}")
+//    public ResponseEntity<GetPresignedThumbnailUrlResult> getMusicLowThumbnail(@PathVariable String musicId, @PathVariable String quality) throws MalformedURLException{
+//        GetPresignedThumbnailUrlResult result;
+//
+//        switch (quality){
+//            case "low":
+//                result = musicDataService.getThumbnailPresignedUrl(musicId, ThumbnailQuality.LOW);
+//                break;
+//            case "medium":
+//                result = musicDataService.getThumbnailPresignedUrl(musicId, ThumbnailQuality.MEDIUM);
+//                break;
+//            case "high":
+//                result = musicDataService.getThumbnailPresignedUrl(musicId, ThumbnailQuality.HIGH);
+//                break;
+//            default:
+//                return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+//        }
+//
+//        return new ResponseEntity<>(result, HttpStatusCode.valueOf(result.getStatusCode()));
+//
+//    }
 
 }

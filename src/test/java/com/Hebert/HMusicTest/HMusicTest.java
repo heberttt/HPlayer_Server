@@ -2,19 +2,11 @@ package com.Hebert.HMusicTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.hibernate.exception.GenericJDBCException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 
 import com.Hebert.HPlayer.HMusic.MusicDownloaderService;
-import com.Hebert.HPlayer.HMusic.implementation.YoutubeDataApiConsumer;
 import com.Hebert.HPlayer.HMusic.implementation.YoutubeUtil;
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.VideoListResponse;
-
-import java.io.IOException;
 
 public class HMusicTest {
 
